@@ -266,6 +266,17 @@ char 	value_x[DIM_VALUE_X];
 	sprintf(value_x, "Press 's' to start the game");
 	textout_centre_ex(screen, font, value_x, rect_coord_x1 + 100, rect_coord_y1 - 450, 15, -1);
 	
+	sprintf(value_x, "Press 'i' to move up");
+	textout_centre_ex(screen, font, value_x, rect_coord_x1 + 680, rect_coord_y1 - 450, 15, -1);
+
+	sprintf(value_x, "Press 'k' to move down");
+	textout_centre_ex(screen, font, value_x, rect_coord_x1 + 680, rect_coord_y1 - 420, 15, -1);
+
+	sprintf(value_x, "Press 'j' to move left");
+	textout_centre_ex(screen, font, value_x, rect_coord_x1 + 680, rect_coord_y1 - 390, 15, -1);
+
+	sprintf(value_x, "Press 'l' to move ");
+	textout_centre_ex(screen, font, value_x, rect_coord_x1 + 680, rect_coord_y1 - 360, 15, -1);
 
 
 	return true;
