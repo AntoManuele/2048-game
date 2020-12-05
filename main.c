@@ -205,11 +205,11 @@ void *move_task()
 		left == false;
 	}
 
-/*	if (right == true) {
+	if (right == true) {
 		move_right();
 		right == false;
 	}
-*/
+
 	if (up == true) {
 		move_up();
 		
@@ -540,8 +540,35 @@ int  *  sp;
 void move_right()
 {
 
+int 	i, j, ind = 0; 
+int 	spread[BOX*BOX];
+int  *  sp;
 
+	pthread_mutex_lock(&mutex);
+	printf("Move right!\n");
+ 
+	for(int i = 0; i < BOX; i++) {
+		for(int j = 0; j < BOX; j++) {
+			spread[ind] = matrix[j][BOX-i-1];
+			ind++;
+		}
+	}
 
+	sp = spread_algorithm(spread);
+
+	ind = 0;
+	for(int i = 0; i < BOX; i++) {
+		for(int j = 0; j < BOX; j++) {
+			matrix[j][BOX-i-1] = sp[ind];
+			ind++;
+		}
+	}
+		
+	pthread_mutex_unlock(&mutex);
+	right = false;
+	
+	reset_graphic();
+	display_numbers();
 
 }
 

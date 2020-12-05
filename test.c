@@ -38,7 +38,7 @@ printf("\n\n");
 ind = 0;
 for(int i = 0; i < BOX; i++) {
 	for(int j = 0; j < BOX; j++) {
-		vect[ind] = temp_matrix[BOX-j-1][i];
+		vect[ind] = temp_matrix[j][BOX-i-1];
 		ind++;
 	}
 }
@@ -59,7 +59,7 @@ printf("\n\n");
 ind = 0;
 for(int i = 0; i < BOX; i++) {
 	for(int j = 0; j < BOX; j++) {
-		temp_matrix[BOX-j-1][i] = vect[ind];
+		temp_matrix[i][j] = vect[ind];
 		ind++;
 	}
 }
