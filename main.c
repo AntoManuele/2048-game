@@ -33,9 +33,7 @@
 
 // MACRO PER IL GIOCO
 
-#define		CONST			33		//costante da salvare nella profile_matrix
 #define		INTERV			4
-
 
 
 /****************** GLOBAL VARIABLES *******************/
@@ -46,15 +44,16 @@ bool		quit			=	false;		//  variabile di terminazione
 bool		begin			=	false;		//  variabile di inizio gioco
 bool		left			= 	false;		//  variabile per muovere a sinistra
 bool		right			= 	false;		//  variabile per muovere a destra
-bool		up			= 	false;		//  variabile per muovere verso l'alto
+bool		up				= 	false;		//  variabile per muovere verso l'alto
 bool		down			= 	false;		//  variabile per muovere verso sinistra
 
 
 //	variabili gioco
 	
 int 		matrix[BOX][BOX]; 			// matrice dinamica in cui vengono caricati i valori
-int		profile_matrix[BOX][BOX];		// matrice utile nei calcoli e negli spostamenti
 int 		temp_matrix[BOX][BOX];			// matrice temporanea
+bool 		game_over  		= 	false;
+
 
 //	mutex
 
@@ -85,7 +84,7 @@ void 		*move_task();				// 	task per muovere/sommare i numeri della matrice
 
 bool		init();					//	funzione di inizializzazione di dati, variabili e grafica
 bool 		crea_matrice();				//	funzione che crea la matrice iniziale
-int		draw_rect();				//	funzione per il disegno del rettangolo del grafico
+int			draw_rect();				//	funzione per il disegno del rettangolo del grafico
 void		read_command(char key);			//	interprete dei comandi inseriti dall'utente
 void 		reset_graphic();			//	resetta la grafica ogni Ts
 void 		display_numbers();			//	visualizza a display la matrice
@@ -374,9 +373,6 @@ int 	i = 0, j = 0;
 	column_2	= 	 rand() % (BOX);
 
 
-	//printf("linea_1 = %d, colonna_1 = %d\n", line_1+1, column_1+1);
-	//printf("linea_2 = %d, colonna_2 = %d\n", line_2+1, column_2+1);
-
 	matrix[line_1][column_1] = 2;
 	matrix[line_2][column_2] = 2;
 	
@@ -389,14 +385,6 @@ int 	i = 0, j = 0;
 	printf("\n");
 	}
 
-	//setto la profile_matrix
-	for (i = 0; i < BOX; i++) {
-		
-		for (j = 0; j < BOX; j++) {
-			profile_matrix[i][j] = 0;
-		}
-	}
-	
 	
 }
 
@@ -451,12 +439,11 @@ int 	i = 0, j = 0;
 		}
 	}
 
-
 }
 
 
 //---------------------------------------------------------------------------
-//                       Muove tutto
+//                  		     Muove tutto
 //---------------------------------------------------------------------------
 
 
@@ -466,6 +453,7 @@ int * spread_algorithm(int spread[])
 int 	i;
 bool 	done = false;
 int 	incr = 0;
+int 	count = 0;
 
 	do {
 		incr = 0;
@@ -486,6 +474,28 @@ int 	incr = 0;
 
 	} while (done == false);
 
+
+	// Aggiungo un nuovo elemento alla matrice
+	for (i = 0; i < BOX*BOX; i++) {
+		if (spread[i] == 0)
+			count++;
+	}
+
+	if (count == 0)
+		game_over = true;
+	else {
+		// il nuovo valore sarà 2 con probabilità 2/3 e 4 con prob. 1/3
+		int position = 0;
+		do {
+			position = (int)floor(count/2)+rand()%count;
+		} while (spread[position] != 0);
+		
+		if (1 + rand()%100 <= 67)
+			spread[position] = 2;
+		else 
+			spread[position] = 4;
+		
+	}
 
 	return spread;
 }
@@ -563,6 +573,8 @@ int  *  sp;
 			ind++;
 		}
 	}
+
+	
 		
 	pthread_mutex_unlock(&mutex);
 	right = false;
@@ -668,16 +680,6 @@ int  *  sp;
 	display_numbers();
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
