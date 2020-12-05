@@ -2,31 +2,74 @@
 #include <math.h>
 #include <stdlib.h>
 
+#define BOX 4
 
 int main() {
 
 
-int matrix[16];
-int temp_matrix[16];
+int matrix[BOX][BOX];
+int temp_matrix[BOX][BOX];
+int ind = 1;
+int vect[BOX*BOX];
 
-
-for(int i=0;i<16;i++)
-	temp_matrix[i] = i;
-
-
-printf("\n\n");
-
-
-for(int i=0;i<16;i++){
-	matrix[i] = temp_matrix[16-i-1];
-	//printf("%d\n", 16-i-1);
+for(int i=0; i<BOX; i++) {
+	for(int j=0; j<BOX; j++) {
+		matrix[i][j] = 0;
+	}
 }
 
 
+for(int i=0; i<BOX; i++) {
+	for(int j=0; j<BOX; j++) {
+		temp_matrix[i][j] = ind;
+		ind++;
+	}
+}
+
+
+for(int i=0; i<BOX; i++) { 
+	for(int j=0; j<BOX; j++)
+		printf("%d\t", temp_matrix[i][j]);
+	printf("\n");
+}
+
+printf("\n\n");
+
+ind = 0;
+for(int i = 0; i < BOX; i++) {
+	for(int j = 0; j < BOX; j++) {
+		vect[ind] = temp_matrix[BOX-j-1][i];
+		ind++;
+	}
+}
+
+
+for(int j=0; j<BOX*BOX; j++)
+	printf("%d\t", vect[j]);
+printf("\n");
+
+
+
 printf("\n\n");
 
 
-for(int i=15;i>-1;i--)
-	printf("%d\n", matrix[i]);
+
+
+
+ind = 0;
+for(int i = 0; i < BOX; i++) {
+	for(int j = 0; j < BOX; j++) {
+		temp_matrix[BOX-j-1][i] = vect[ind];
+		ind++;
+	}
+}
+
+for(int i=0; i<BOX; i++) { 
+	for(int j=0; j<BOX; j++)
+		printf("%d\t", temp_matrix[i][j]);
+	printf("\n");
+}
+
+
 
 }

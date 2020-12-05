@@ -200,12 +200,12 @@ void *move_task()
     while (quit == false) {
 
 
-/*	if (left == true) {
+	if (left == true) {
 		move_left();
 		left == false;
 	}
 
-	if (right == true) {
+/*	if (right == true) {
 		move_right();
 		right == false;
 	}
@@ -456,6 +456,41 @@ int 	i = 0, j = 0;
 
 
 //---------------------------------------------------------------------------
+//                       Muove tutto
+//---------------------------------------------------------------------------
+
+
+int * spread_algorithm(int spread[])
+{
+
+int 	i;
+bool 	done = false;
+int 	incr = 0;
+
+	do {
+		incr = 0;
+		done = true;
+		for (i = 0; i < BOX*BOX - BOX; i++) {
+
+			if (spread[i] != 0 && spread[i] == spread[i+INTERV]) {
+				spread[i]	  = 	spread[i] + spread[i+INTERV];
+				spread[i+INTERV]  = 	0;
+				done = false;
+			}
+			else if (spread[i] == 0 && spread[i+INTERV] != 0) {
+				spread[i] = spread[i+INTERV];
+				spread[i+INTERV] = 0;
+				done = false;
+			}
+		}		
+
+	} while (done == false);
+
+
+	return spread;
+}
+
+//---------------------------------------------------------------------------
 //                         Muove tutto a sinistra
 //---------------------------------------------------------------------------
 
@@ -463,10 +498,35 @@ int 	i = 0, j = 0;
 void move_left()
 {
 
+int 	i, j, ind = 0; 
+int 	spread[BOX*BOX];
+int  *  sp;
 
+	pthread_mutex_lock(&mutex);
+	printf("Move left!\n");
+ 
+	for(int i = 0; i < BOX; i++) {
+		for(int j = 0; j < BOX; j++) {
+			spread[ind] = matrix[BOX-j-1][i];
+			ind++;
+		}
+	}
 
+	sp = spread_algorithm(spread);
+
+	ind = 0;
+	for(int i = 0; i < BOX; i++) {
+		for(int j = 0; j < BOX; j++) {
+			matrix[BOX-j-1][i] = sp[ind];
+			ind++;
+		}
+	}
+		
+	pthread_mutex_unlock(&mutex);
+	left = false;
 	
-
+	reset_graphic();
+	display_numbers();
 
 
 }
@@ -545,7 +605,6 @@ int  *  sp;
 
 	pthread_mutex_lock(&mutex);
 	printf("Move down!\n");
-	// spalmo i valori su un unico vettore
 	for (i = 0; i < BOX; i++) {
 		for (j = 0; j < BOX; j++){	
 			temp[ind] = matrix[i][j];
@@ -584,43 +643,6 @@ int  *  sp;
 }
 
 
-
-//---------------------------------------------------------------------------
-//                       Muove tutto
-//---------------------------------------------------------------------------
-
-
-int * spread_algorithm(int spread[])
-{
-
-int 	i;
-bool 	done = false;
-int 	incr = 0;
-
-	do {
-		incr = 0;
-		done = true;
-		for (i = 0; i < BOX*BOX - BOX; i++) {
-
-			if (spread[i] != 0 && spread[i] == spread[incr+INTERV]) {
-				spread[i]	  = 	spread[i] + spread[i+INTERV];
-				spread[i+INTERV]  = 	0;
-				done = false;
-
-			}
-			else if (spread[i] == 0 && spread[i+INTERV] != 0) {
-				spread[i] = spread[i+INTERV];
-				spread[i+INTERV] = 0;
-				done = false;
-			}
-			//printf("\n\ni-> %d\n\n", i);
-		}		
-
-	} while (done == false);
-
-
-	return spread;
-}
 
 
 
