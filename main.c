@@ -499,7 +499,7 @@ int 	spread[BOX*BOX];
 int  *  sp;
 
 	pthread_mutex_lock(&mutex);
-	
+	printf("Move up!\n");
 	// spalmo i valori su un unico vettore
  
 	for (i = 0; i < BOX; i++) {
@@ -544,7 +544,7 @@ int 	spread[BOX*BOX];
 int  *  sp;
 
 	pthread_mutex_lock(&mutex);
-	
+	printf("Move down!\n");
 	// spalmo i valori su un unico vettore
 	for (i = 0; i < BOX; i++) {
 		for (j = 0; j < BOX; j++){	
@@ -561,10 +561,14 @@ int  *  sp;
 
 	sp = spread_algorithm(spread);
 
-	// Invertire spread per tornare alla matrice
+
+	for (i = 0; i < BOX*BOX; i++)
+		printf("%d", sp[i]);
+	printf("\n");
+
 	ind = 0;
 	for (i = BOX-1; i > -1; i--) {
-		for (j = BOX; j > 0; j--) {
+		for (j = BOX-1; j > -1; j--) {
 			matrix[i][j] = sp[ind];
 			ind++;
 		}
@@ -613,14 +617,6 @@ int 	incr = 0;
 		}		
 
 	} while (done == false);
-
-
-/*
-	printf("----------------\n");
-	for (i = 0; i < BOX*BOX; i++) 
-		printf("%d", spread[i]);
-
-	printf("\n");*/
 
 
 	return spread;
