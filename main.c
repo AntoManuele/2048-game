@@ -44,7 +44,7 @@ bool		quit			=	false;		//  variabile di terminazione
 bool		begin			=	false;		//  variabile di inizio gioco
 bool		left			= 	false;		//  variabile per muovere a sinistra
 bool		right			= 	false;		//  variabile per muovere a destra
-bool		up				= 	false;		//  variabile per muovere verso l'alto
+bool		up			= 	false;		//  variabile per muovere verso l'alto
 bool		down			= 	false;		//  variabile per muovere verso sinistra
 
 
@@ -52,6 +52,7 @@ bool		down			= 	false;		//  variabile per muovere verso sinistra
 	
 int 		matrix[BOX][BOX]; 			// matrice dinamica in cui vengono caricati i valori
 int 		temp_matrix[BOX][BOX];			// matrice temporanea
+bool		enable_new_element 	= 	false;
 bool 		game_over  		= 	false;
 
 
@@ -475,11 +476,13 @@ int 	count = 0;
 				spread[i]	  = 	spread[i] + spread[i+INTERV];
 				spread[i+INTERV]  = 	0;
 				done = false;
+				enable_new_element = true;
 			}
 			else if (spread[i] == 0 && spread[i+INTERV] != 0) {
 				spread[i] = spread[i+INTERV];
 				spread[i+INTERV] = 0;
 				done = false;
+				enable_new_element = true;
 			}
 		}		
 
@@ -494,7 +497,8 @@ int 	count = 0;
 
 	if (count == 0)
 		game_over = true;
-	else {
+	else if (enable_new_element == true) {
+		
 		// il nuovo valore sarà 2 con probabilità 2/3 e 4 con prob. 1/3
 		int position = 0;
 		do {
