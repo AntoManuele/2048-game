@@ -27,7 +27,7 @@
 
 #define 	DIM_TEXT		48		//dimensione del testo 
 #define		DIM_VALUE_X		180		//dimensione dei valori da visualizzare
-#define 	BOX			4		//numero di righe e colonne
+#define 	BOX				4		//numero di righe e colonne
 #define 	SPACE			120		//spazio tra due righe/colonne
 
 
@@ -44,7 +44,7 @@ bool		quit			=	false;		//  variabile di terminazione
 bool		begin			=	false;		//  variabile di inizio gioco
 bool		left			= 	false;		//  variabile per muovere a sinistra
 bool		right			= 	false;		//  variabile per muovere a destra
-bool		up			= 	false;		//  variabile per muovere verso l'alto
+bool		up				= 	false;		//  variabile per muovere verso l'alto
 bool		down			= 	false;		//  variabile per muovere verso sinistra
 
 
@@ -53,7 +53,7 @@ bool		down			= 	false;		//  variabile per muovere verso sinistra
 int 		matrix[BOX][BOX]; 			// matrice dinamica in cui vengono caricati i valori
 int 		temp_matrix[BOX][BOX];			// matrice temporanea
 bool		enable_new_element 	= 	false;
-bool 		game_over  		= 	false;
+bool 		game_over  			= 	false;
 
 
 //	mutex
@@ -65,8 +65,8 @@ pthread_mutex_t 	mutex 		= 	PTHREAD_MUTEX_INITIALIZER;
 //	gruppo di variabili per la grafica
 
 int		x = 1024, y = 720, col = 4;
-int		rect_coord_x1 = 160; 			// 	x / 4
-int		rect_coord_x2 = 640; 			// 	3/4 * x 
+int		rect_coord_x1 = 160; 			
+int		rect_coord_x2 = 640; 			
 int		rect_coord_y1 = 480;
 int		rect_coord_y2 = 120;
 int		num_position_x = 225;			//	posizione dei numeri nella tabella
@@ -106,14 +106,11 @@ int main(void)
 		
 
 	// tasks creation
-
 	task_create(graphic_task,	GRAPHIC_TASK,	    GRAPHIC_PERIOD,	1000,	20);
 	task_create(user_command,	USER_TASK,	    USER_PERIOD,	500,	20);
 	task_create(move_task,		MOVE_TASK,	    MOVE_PERIOD,	500,	20);
 	
-
 	// tasks joining
-
 	pthread_join(tid[GRAPHIC_TASK],NULL);
 	printf("GRAPHIC TASK\n");
 	pthread_join(tid[USER_TASK],NULL);
@@ -121,7 +118,6 @@ int main(void)
 	pthread_join(tid[MOVE_TASK],NULL);
 	printf("MOVE TASK\n");
 
-	
 
 	return 0;
 }
@@ -145,7 +141,6 @@ void *graphic_task()
 		
 		do {
 			continue;
-			
 
 		} while (begin == false);
 		
@@ -156,6 +151,7 @@ void *graphic_task()
 		if (deadline_miss(GRAPHIC_TASK) == 1) //printf("DEADLINE MISS GRAPHIC\n");     //soft real time
 		wait_for_activation(GRAPHIC_TASK);
 	}	
+
 	return NULL;
 }
 
@@ -220,13 +216,8 @@ void *move_task()
 		down == false;
 	}
 
-	
-/*	reset_graphic();
-	display_numbers();*/
-	
-		
-      //  if (deadline_miss(MOVE_TASK) == 1) printf("DEADLINE MISS MOVE TASK\n");     //soft real time
-        wait_for_activation(USER_TASK);
+	    
+	wait_for_activation(USER_TASK);
     }
 }
 
@@ -388,17 +379,16 @@ int 	i = 0, j = 0;
 	line_2 		=	 rand() % (BOX);
 	column_2	= 	 rand() % (BOX);
 
-
 	matrix[line_1][column_1] = 2;
 	matrix[line_2][column_2] = 2;
 	
-
 	for (i = 0; i < BOX; i++) {
 		
 		for (j = 0; j < BOX; j++) {
 			printf("%d	", matrix[i][j]);
 		}
 	printf("\n");
+
 	}
 
 	
@@ -502,9 +492,9 @@ int 	count = 0;
 	if (count == 0) 
 		game_over = true;
 
-	else if (enable_new_element == true) {
+/*	else if (enable_new_element == true) {
 		
-		// il nuovo valore sarà 2 con probabilità 2/3 e 4 con prob. 1/3
+		// il nuovo valore sarà 2 con probabilità 2/3, e 4 con prob. 1/3
 		int position = 0;
 		do {
 			position = (int)floor(count/2)+rand()%count;
@@ -513,7 +503,20 @@ int 	count = 0;
 		if (1 + rand()%100 <= 67)
 			spread[position] = 2;
 		else 
-			spread[position] = 4;
+			spread[position] = 4; */
+
+	else {
+		
+		// il nuovo valore sarà 2 con probabilità 2/3, e 4 con prob. 1/3
+		int position = 0;
+		do {
+			position = (int)floor(count/2)+rand()%count;
+		} while (spread[position] != 0);
+		
+		if (1 + rand()%100 <= 67)
+			spread[position] = 2;
+		else 
+			spread[position] = 4; 
 		
 	}
 
