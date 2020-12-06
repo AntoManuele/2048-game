@@ -2,7 +2,7 @@
 *Reproduction of 2048 game in C with Allegro library*
 
 
-<p>Commands to run the game:<p>
+<p>Commands to run the game (Linux systems):<p>
 
 <ul>
 <li>make</li>
@@ -10,6 +10,7 @@
 </ul>
 
 
+<p>Commands to play the game:<p>
 <ul>
   <li>'s' for start the game</li>
   <li>'i' for move up</li>
