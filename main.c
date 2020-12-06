@@ -279,6 +279,10 @@ char 	value_x[DIM_VALUE_X];
 	sprintf(value_x, "Press 'l' to move ");
 	textout_centre_ex(screen, font, value_x, rect_coord_x1 + 680, rect_coord_y1 - 360, 15, -1);
 
+	if (game_over == true) {
+		sprintf(value_x, "GAME OVER");
+		textout_centre_ex(screen, font, value_x, rect_coord_x1 + 680, rect_coord_y1 - 300, 15, -1);
+	}
 
 	return true;
 }
@@ -495,8 +499,9 @@ int 	count = 0;
 			count++;
 	}
 
-	if (count == 0)
+	if (count == 0) 
 		game_over = true;
+
 	else if (enable_new_element == true) {
 		
 		// il nuovo valore sarà 2 con probabilità 2/3 e 4 con prob. 1/3
