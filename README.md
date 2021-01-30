@@ -1,5 +1,6 @@
 # 2048-game
 *Reproduction of 2048 game in C with Allegro library*
+The aim of the work is to study and implement the game algorithm, giving very little importance to graphics.
 
 
 <p>Commands to run the game (Linux systems):<p>
