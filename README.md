@@ -5,17 +5,20 @@ The aim of the work is to study and implement the game algorithm with multithrea
 
 <p>Commands to run the game (Linux systems):<p>
 
+``````
 <ul>
 <li>make</li>
 <li>sudo ./main</li>
 </ul>
-
+```
 
 <p>Commands to play the game:<p>
 <ul>
+```
   <li>'s' for start the game</li>
   <li>'i' for move up</li>
   <li>'k' for move down</li>
   <li>'j' for move left</li>
   <li>'l' for move right</li>
+  ```
 </ul>
