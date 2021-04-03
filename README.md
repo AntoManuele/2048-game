@@ -6,10 +6,8 @@ The aim of the work is to study and implement the game algorithm with multithrea
 <p>Commands to run the game (Linux systems):<p>
 
 ```
-<ul>
-<li>make</li>
-<li>sudo ./main</li>
-</ul>
+make
+sudo ./main
 ```
 
 <p>Commands to play the game:<p>
