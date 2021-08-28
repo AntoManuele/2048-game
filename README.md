@@ -12,9 +12,9 @@ sudo ./main
 
 <p>Commands to play the game:<p>
 <ul>
-  <li>'s' for start the game</li>
-  <li>'i' for move up</li>
-  <li>'k' for move down</li>
-  <li>'j' for move left</li>
-  <li>'l' for move right</li>
+  <li>'s' to start the game</li>
+  <li>'i' to move up</li>
+  <li>'k' to move down</li>
+  <li>'j' to move left</li>
+  <li>'l' to move right</li>
 </ul>
